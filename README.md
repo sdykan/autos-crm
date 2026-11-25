@@ -2,7 +2,7 @@
 
 CRM for used-car dealerships in Germany: stock of cars, clients and sales contracts (Kaufvertrag) generated as PDF in one click.
 
-**Live demo:** https://2323-orcin.vercel.app
+**Live demo:** https://2323-orcin.vercel.app — runs in demo mode: any email and a 6+ character password, all data is fictional.
 
 ## Features
 
@@ -27,12 +27,21 @@ CRM for used-car dealerships in Germany: stock of cars, clients and sales contra
 | i18n | i18next (DE, RU) |
 | Hosting | Vercel |
 
+## Demo mode
+
+Without Supabase keys the app runs entirely in the browser on fictional data: 13 cars, 6 clients and 6 contracts, so every page and the PDF contract can be tried right away. Changes are saved in `localStorage`; the **Reset demo data** button in the header restores the original set. The demo client (`src/lib/demo`) implements the part of the Supabase API the app uses, so no page code knows which backend is active.
+
 ## Getting started
 
 ```bash
-cp .env.example .env    # add your Supabase URL and anon key, and your dealership details
 npm install
-npm run dev
+npm run dev             # demo mode, no setup needed
+```
+
+To work with real data, create a Supabase project and add its keys:
+
+```bash
+cp .env.example .env    # Supabase URL and anon key, your dealership details
 ```
 
 The dealership details printed on contracts (name, address, tax number, VAT ID, bank account) come from `.env`. Without them the app uses fictional demo values (Musterautohaus GmbH).

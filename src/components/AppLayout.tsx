@@ -1,8 +1,9 @@
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu, Button, Tag } from 'antd';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { supabase } from '../lib/supabase';
+import { isDemoMode, supabase } from '../lib/supabase';
+import { resetDemoData } from '../lib/demo/demoClient';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
 export default function AppLayout() {
@@ -64,6 +65,19 @@ export default function AppLayout() {
 
             <Layout>
                 <Layout.Header style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 12 }}>
+                    {isDemoMode && (
+                        <>
+                            <Tag color="gold">Demo</Tag>
+                            <Button
+                                onClick={() => {
+                                    resetDemoData();
+                                    window.location.reload();
+                                }}
+                            >
+                                {t('login.demoReset')}
+                            </Button>
+                        </>
+                    )}
                     <LanguageSwitcher />
                     <Button
                         onClick={async () => {

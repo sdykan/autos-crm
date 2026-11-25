@@ -21,6 +21,8 @@ const de = {
     logout: 'Abmelden',
   },
   login: {
+    demoHint: 'Demo-Modus: beliebige E-Mail und ein Passwort mit mindestens 6 Zeichen eingeben. Alle Daten sind fiktiv.',
+    demoReset: 'Demodaten zurücksetzen',
     subtitle: 'Fahrzeug- und Kundenverwaltungssystem',
     title: 'Anmeldung',
     email: 'E-Mail',

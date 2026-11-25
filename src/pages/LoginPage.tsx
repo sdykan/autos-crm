@@ -1,5 +1,5 @@
-import { Card, Form, Input, Button, Typography, message, Space } from 'antd';
-import { supabase } from '../lib/supabase';
+import { Alert, Card, Form, Input, Button, Typography, message, Space } from 'antd';
+import { isDemoMode, supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -69,10 +69,20 @@ export default function LoginPage() {
                         {t('login.title')}
                     </Typography.Title>
 
+                    {isDemoMode && (
+                        <Alert
+                            type="info"
+                            showIcon
+                            style={{ marginBottom: 16 }}
+                            message={t('login.demoHint')}
+                        />
+                    )}
+
                     <Form<FormValues>
                         form={form}
                         layout="vertical"
                         onFinish={login}
+                        initialValues={isDemoMode ? { email: 'demo@autos-crm.de', password: 'demo123' } : undefined}
                     >
                         <Form.Item
                             label={t('login.email')}
