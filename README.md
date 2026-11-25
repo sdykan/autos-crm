@@ -1,73 +1,60 @@
-# React + TypeScript + Vite
+# Autos CRM
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CRM for used-car dealerships in Germany: stock of cars, clients and sales contracts (Kaufvertrag) generated as PDF in one click.
 
-Currently, two official plugins are available:
+**Live demo:** https://2323-orcin.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Cars** — stock list with VIN, registration document number (Kfz-Brief), first registration (EZ), colour, purchase and sale price, status (In Stock / Reserved / Sold); export to Excel
+- **Clients** — buyers with address data, linked to contracts
+- **Sales contracts** — a Kaufvertrag PDF generated in the browser:
+  - VAT options: standard VAT or margin scheme (§25a UStG)
+  - sale within Germany, to an EU country (with or without VAT ID) or to a third country (with or without customs certificate)
+  - vehicle condition, warranty exclusion, documents and keys handed over, payment by cash or bank transfer
+- **Dashboard** — cars in stock, sales and contracts at a glance, with charts
+- **Two languages** — German and Russian, switchable in the interface
+- **Authentication** — email and password via Supabase Auth
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+| Area | Tools |
+| --- | --- |
+| Frontend | React 19, TypeScript, Vite, React Router 7 |
+| UI | Ant Design 6, @ant-design/plots |
+| Backend | Supabase (PostgreSQL, Auth) |
+| Documents | jsPDF (contracts), ExcelJS (export) |
+| i18n | i18next (DE, RU) |
+| Hosting | Vercel |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cp .env.example .env    # add your Supabase URL and anon key, and your dealership details
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The dealership details printed on contracts (name, address, tax number, VAT ID, bank account) come from `.env`. Without them the app uses fictional demo values (Musterautohaus GmbH).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Supabase tables used by the app: `cars`, `clients`, `contracts`. Enable Row Level Security so that only signed-in staff can read and change data.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project structure
+
+```
+src/
+├── pages/            # Dashboard, Cars, Clients, Contracts, Login, public home page
+├── components/       # Layout, language switcher, contract creation modal
+├── pdf/contract/     # Kaufvertrag PDF: header, intro, price block, clauses, signatures, footer
+├── config/           # Seller details and contract options
+├── i18n/             # German and Russian translations
+├── lib/supabase.ts   # Supabase client
+└── utils/            # Excel export
+```
+
+## Build
+
+```bash
+npm run build     # type check + production build
+npm run preview
 ```

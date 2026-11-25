@@ -1,3 +1,4 @@
+import { SELLER } from '../../config/seller';
 import type { ContractPdfData } from './types';
 import { formatDateDE } from './template/utils';
 import type {ContractRowView} from '../../pages/ContractsPage.tsx';
@@ -8,7 +9,7 @@ export function mapRowToContractPdfData(row: ContractRowView): ContractPdfData {
 
     return {
         invoiceNr: String(row.nr),
-        cityDateRight: `Dresden ${formatDateDE(row.contract_date)}`,
+        cityDateRight: `${SELLER.contractCity} ${formatDateDE(row.contract_date)}`,
 
         client: {
             name: cl.name ?? '',

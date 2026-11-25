@@ -1,3 +1,5 @@
+import { SELLER } from './seller';
+
 export type TaxYesNo = 'yes' | 'no';
 
 export type ClauseKey = 'paragraph_25a' | 'export_poland' | 'no_warranty' | 'custom';
@@ -10,19 +12,7 @@ export type CustomsMode = 'with' | 'without' | null;
 export type SellerConditionKey = 'bastlerfahrzeug' | 'no_accident' | 'no_other_damage' | 'has_damage';
 
 export const CONTRACT_CONFIG = {
-    seller: {
-        name: 'Musterautohaus GmbH',
-        address: 'Musterstraße 1',
-        city: '12345 Musterstadt',
-        phone: '0123 4567890',
-        taxNumber: '000/000/00000',
-        vatId: 'DE000000000',
-        bank: {
-            iban: 'DE00 0000 0000 0000 0000 00',
-            bic: 'XXXXDEXXXXX',
-            bankName: 'Musterbank',
-        },
-    },
+    seller: SELLER,
 
     liabilityText:
         'Das Kraftfahrzeug wird unter Ausschluss der Rechts- und Sachmängelhaftung verkauft, soweit nicht nachfolgend eine einjährige ' +
